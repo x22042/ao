@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/list.css">
+
+    <title>Qfactory</title>
+</head>
+<body>
+    <h1>Qfactory</h1>
+    <h2>問題一覧</h2>
+    <ul>
+        {% for file in files %}
+            <li class="file-item">
+                <img src="{{ url_for('static', filename='images/file_icon.jpg') }}" alt="ファイル画像" class="file-image">
+                <a href="/text/{{file}}">{{ file }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="/" class="button">アップロードページに戻る</a>
+</body>
+</html> 
