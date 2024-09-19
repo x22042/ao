@@ -1,11 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='first.css') }}">
+    <title>Qfactory</title>
 </head>
 <body>
-    aa
+
+    <div class="container">
+        <h1>Qfactory</h1>
+        <h2>PDFファイルアップロード</h2>
+        <form method="POST" action="/upload" enctype="multipart/form-data">
+            <label for="filename">ファイル名:</label>
+            <input type="text" id="filename" name="filename" required>
+            <br><br>
+            <input type="file" name="pdfFile" accept="application/pdf" required>
+            <button type="submit">アップロード</button>
+        </form>
+        <a href="/texts">テキストファイル一覧</a>
+    </div>
 </body>
+
 </html>
