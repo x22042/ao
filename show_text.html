@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qfactory</title>
+    <link rel="stylesheet" href="/static/text.css">
+    <style>
+        /* ブランクの所でマウスカーソル表示を変更 */
+        .blank label {
+            cursor: pointer;
+        }
+        /* チェックボックスは非表示 */
+        .blank input {
+            display: none;
+            margin: 0px;
+        }
+
+        /* ブランクの背景を赤に設定 */
+        .blank {
+            background-color: #a8d0fc;
+        }
+        /* チェックされていない時は答え（テキスト）を非表示 */
+        .blank input + label {
+            opacity: 0;
+        }
+        /* チェックされたら答え（テキスト）を表示 */
+        .blank input:checked + label {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Qfactory</h1>
+    <div id="container"> 
+        <div id="quizContainer">
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const content = `{{ content | safe }}`;
+
+                    // ファイルの<Answer>より前の部分と後の部分を分割
+                    const [quizPart, answerPart] = content.split('<Answer>');
+                    let answers = answerPart.trim().split('\n');
+                    let quizIndex = 0;
+
+                    // _____をチェックボックスと対応する答えで置き換える
+                    const quizWithBlanks = quizPart.replace(/_____/g, function() {
+                        const answer = answers[quizIndex++];
+                        return `
+                            <span class="blank">
+                                <input type="checkbox" id="blank${quizIndex}">
+                                <label for="blank${quizIndex}">${answer}</label>
+                            </span>
+                        `;
+                    });
+
+                    document.getElementById('quizContainer').innerHTML = `<form>${quizWithBlanks}</form>`;
+                });
+            </script>
+        </div>
+    </div>
+    
+    <a href="/" class="button">アップロードページに戻る</a>
+</body>
+</html>
